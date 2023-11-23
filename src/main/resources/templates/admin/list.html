@@ -4,41 +4,30 @@
 
 </head>
 <body>
-<div class="photo-container">
-    <h1>Pizza List</h1>
 
+<div class="photo-list-container">
+    <h1>Photo List</h1>
+    <div class="buttons-container">
+        <a th:href="@{/photos/create}" class="btn btn-primary">Aggiungi Nuova Foto</a>
+    </div>
 
+    <div class="photo-card-container" th:if="${not listPhoto.empty}">
+        <div th:each="photo : ${listPhoto}" class="photo-card">
+            <a th:href="@{/photos/show/{id}(id=${photo.id})}">
+            <img th:src="${photo.url}" class="photo-card-img" th:alt="${photo.title}">
+            <div class="photo-card-body">
+                <h5 class="photo-title" th:text="${photo.title}"></h5>
+                <p class="photo-description" th:text="${photo.description}"></p>
+            </div>
+            </a>
+        </div>
+    </div>
 
-
-    <table class="table" th:if="${not listPhoto.empty}">
-        <thead>
-        <th></th>
-        <th>title</th>
-        <th>description</th>
-
-        <th>Foto</th>
-        </thead>
-        <tbody class="photo-list">
-
-            <td th:text="|€${}|"></td>
-            <td>
-                <span th:text="${photo.title}"></span>
-                <img th:if="${pizza.offers.size() !=0}"
-                     style="max-width: 35px; margin-left: 5px; transform: rotate(20deg);"
-                     src="https://dematteohome.it/img/cms/bollino-special-promo.png"
-                     alt="bollino">
-            </td>
-            <td class="descrizione_pizza" th:text="${photo.description}"></td>
-            <td>
-                <img class="foto_pizza" th:src="${photo.url}" alt="pizza" style="max width= 100px">
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 
 <div class="buttons-container">
     <script th:replace="fragments/resources :: jsResources"></script>
 </div>
+
 </body>
 </html>

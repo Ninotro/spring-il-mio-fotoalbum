@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo.id != null}">
+<head th:insert="fragments/resources :: headResources(${isEdit ? 'Photo Edit' : 'Photo Create'})"></head>
+<body>
+<div class="container create">
+    <h1 th:text="${isEdit ? 'Modifica Foto' : 'Crea Foto'}"></h1>
+    <hr>
+    <form
+            th:with="actionUrl=${isEdit ? '/photos/edit/' + photo.id : '/photos/create'}"
+            id="photo-create"
+            method="POST"
+            th:action="@{${actionUrl}}"
+            th:object="${photo}"
+            class="row"
+    >
+
+        <div class="col-9" th:insert="fragments/components :: formField('text', 'Titolo', 'title')"></div>
+
+        <div class="col-3" th:insert="fragments/components :: formField('text', 'URL', 'url')"></div>
+
+        <div th:insert="fragments/components :: formField('textarea', 'Descrizione', 'description')"></div>
+
+        <h3>Visibilità</h3>
+        <div class="form-check">
+            <input
+                    class="form-check-input"
+                    type="checkbox"
+                    th:id="visible"
+                    th:field="*{visible}">
+            <label class="form-check-label" th:for="visible">Visible</label>
+        </div>
+
+        <div class="mt-4 mb-5">
+            <button class="btn btn-primary" type="submit">Salva</button>
+            <a th:href="@{/photo/list}" class="btn btn-primary">Torna indietro</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

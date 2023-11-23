@@ -1,5 +1,6 @@
 package com.experis.course.spring.service;
 
+import com.experis.course.spring.exception.PhotoNotFoundException;
 import com.experis.course.spring.model.Photo;
 import com.experis.course.spring.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,22 @@ public class PhotoService {
 
         else
             return photoRepository.findAll();
+    }
+
+
+    public Photo getPhotoById(Integer id) throws PhotoNotFoundException {
+        Optional<Photo> result = photoRepository.findById(id);
+
+        if (result.isPresent()) {
+
+            return result.get();
+        } else {
+
+            throw new PhotoNotFoundException("Photo with ID " + id + ": Not Found");
+        }
+    }
+
+    public Photo createPhoto(Photo photo) throws RuntimeException {
+        return photoRepository.save(photo);
     }
 }

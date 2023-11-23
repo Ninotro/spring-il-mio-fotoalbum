@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Photo Show')">
+
+</head>
+<body>
+
+<div class="photo-show-container">
+    <h1 class="photo-title" th:text="${photo.title}"></h1>
+    <p class="photo-description" th:text="${photo.description}"></p>
+    <img th:src="${photo.url}" class="photo-show-img" th:alt="${photo.title}">
+</div>
+
+<div class="buttons-container">
+    <script th:replace="fragments/resources :: jsResources"></script>
+</div>
+
+</body>
+</html>
