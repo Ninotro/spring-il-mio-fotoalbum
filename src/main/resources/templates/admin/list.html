@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Photo List')">
+
+</head>
+<body>
+<div class="photo-container">
+    <h1>Pizza List</h1>
+
+
+
+
+    <table class="table" th:if="${not listPhoto.empty}">
+        <thead>
+        <th></th>
+        <th>title</th>
+        <th>description</th>
+
+        <th>Foto</th>
+        </thead>
+        <tbody class="photo-list">
+
+            <td th:text="|€${}|"></td>
+            <td>
+                <span th:text="${photo.title}"></span>
+                <img th:if="${pizza.offers.size() !=0}"
+                     style="max-width: 35px; margin-left: 5px; transform: rotate(20deg);"
+                     src="https://dematteohome.it/img/cms/bollino-special-promo.png"
+                     alt="bollino">
+            </td>
+            <td class="descrizione_pizza" th:text="${photo.description}"></td>
+            <td>
+                <img class="foto_pizza" th:src="${photo.url}" alt="pizza" style="max width= 100px">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="buttons-container">
+    <script th:replace="fragments/resources :: jsResources"></script>
+</div>
+</body>
+</html>
