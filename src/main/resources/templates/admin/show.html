@@ -9,11 +9,13 @@
     <h1 class="photo-title" th:text="${photo.title}"></h1>
     <p class="photo-description" th:text="${photo.description}"></p>
     <img th:src="${photo.url}" class="photo-show-img" th:alt="${photo.title}">
+    <a th:href="@{/photos}" class="btn btn-primary">Torna indietro</a>
 </div>
 
 <div class="buttons-container">
     <script th:replace="fragments/resources :: jsResources"></script>
 </div>
+
 
 </body>
 </html>

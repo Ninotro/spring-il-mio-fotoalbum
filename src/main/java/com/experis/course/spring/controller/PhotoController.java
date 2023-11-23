@@ -51,7 +51,7 @@ public class PhotoController {
 
 
     @PostMapping("/create")
-    public String createPost(@Valid @ModelAttribute("pizza") Photo formPhoto, BindingResult bindingResult, Model model) {
+    public String createPost(@Valid @ModelAttribute("photo") Photo formPhoto, BindingResult bindingResult, Model model) {
         // Controllo se ci sono errori
         if (bindingResult.hasErrors()) {
 

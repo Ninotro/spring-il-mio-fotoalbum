@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo.id != null}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo != null and photo.id != null}">
 <head th:insert="fragments/resources :: headResources(${isEdit ? 'Photo Edit' : 'Photo Create'})"></head>
 <body>
 <div class="container create">

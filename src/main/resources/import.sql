@@ -8,3 +8,16 @@ INSERT INTO photos (title, description, url, visible) VALUES('Flower Garden', 'C
 
 INSERT INTO photos (title, description, url, visible) VALUES('Snowy Forest', 'Scenic view of a snowy forest', 'https://thumbs.dreamstime.com/b/paesaggi-di-yosemite-46208063.jpg', true);
 INSERT INTO photos (title, description, url, visible) VALUES('Flower Garden', 'Colorful flowers in a garden', 'https://img.freepik.com/free-photo/nature-rock-objects-frame-tranquil-waterscape-generative-ai_188544-12636.jpg', true);
+
+
+INSERT INTO users (first_name, last_name, email, password) VALUES('Giovanni', 'Verdi', 'giovanniverdi@gmail.com', '{noop}giovanni');
+INSERT INTO users (first_name, last_name, email, password) VALUES('Anna', 'Neri', 'annaneri@gmail.com', '{noop}anna');
+
+
+INSERT INTO roles (id, name) VALUES(1, 'ADMIN');
+INSERT INTO roles (id, name) VALUES(2, 'USER');
+
+
+INSERT INTO users_roles (user_id, roles_id) VALUES(1, 2);
+INSERT INTO users_roles (user_id, roles_id) VALUES(2, 1);
+INSERT INTO users_roles (user_id, roles_id) VALUES(2, 2);
