@@ -26,6 +26,11 @@ public class PhotoService {
     }
 
 
+
+
+
+
+
     public Photo getPhotoById(Integer id) throws PhotoNotFoundException {
         Optional<Photo> result = photoRepository.findById(id);
 
