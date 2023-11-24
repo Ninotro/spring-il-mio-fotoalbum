@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo != null and photo.id != null}">
-<head th:insert="fragments/resources :: headResources(${isEdit ? 'Photo Edit' : 'Photo Create'})"></head>
+<head th:insert="fragments/resources :: headResources(${isEdit ? 'Photo Edit' : 'Photo Create'})">
+</head>
 <body>
 <div class="container create">
     <h1 th:text="${isEdit ? 'Modifica Foto' : 'Crea Foto'}"></h1>
@@ -19,6 +20,16 @@
         <div class="col-3" th:insert="fragments/components :: formField('text', 'URL', 'url')"></div>
 
         <div th:insert="fragments/components :: formField('textarea', 'Descrizione', 'description')"></div>
+
+        <div class="col-12">
+            <h3>Categorie:</h3>
+            <div class="form-group">
+                <label th:each="category : ${categoryList}">
+                    <input type="checkbox" th:field="*{categories}" th:value="${category.id}" th:checked="${photo.categories != null and photo.categories.contains(category)}"/>
+                    <span th:text="${category.name}"></span>
+                </label>
+            </div>
+        </div>
 
         <h3>Visibilità</h3>
         <div class="form-check">

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "categories")
 public class Category {
-    // Attributi (in questo caso nomi delle colonne)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Per auto-increment
     private Integer id;

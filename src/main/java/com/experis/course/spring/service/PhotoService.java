@@ -41,4 +41,18 @@ public class PhotoService {
     public Photo createPhoto(Photo photo) throws RuntimeException {
         return photoRepository.save(photo);
     }
+
+    public Photo editPhoto(Photo photo) throws PhotoNotFoundException {
+        Photo photoToEdit = getPhotoById(photo.getId());
+        photoToEdit.setTitle(photo.getTitle());
+        photoToEdit.setDescription(photo.getDescription());
+        photoToEdit.setUrl(photo.getUrl());
+        photoToEdit.setVisible(photo.isVisible());
+        photoToEdit.setCategories(photo.getCategories());
+        return photoRepository.save(photoToEdit);
+    }
+
+    public void deletePhoto(Integer id) {
+        photoRepository.deleteById(id);
+    }
 }

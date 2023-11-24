@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Photo List')">
-
 </head>
 <body>
 
 <div class="photo-list-container">
     <h1>Photo List</h1>
+
+    <!-- Aggiungi il campo di ricerca -->
+    <div class="search-container">
+        <!-- Aggiungi un modulo di ricerca -->
+        <form th:action="@{/photos}" method="get">
+            <input type="text" id="searchInput" name="search" placeholder="Cerca per titolo, descrizione o categoria">
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+
     <div class="buttons-container">
-        <a th:href="@{/photos/create}" class="btn btn-primary">Aggiungi Nuova Foto</a>
+        <!-- Mostra il pulsante solo se l'utente è un admin -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/categories}" class="btn btn-primary">Aggiungi Nuova Categoria</a>
     </div>
 
     <div class="photo-card-container" th:if="${not listPhoto.empty}">
         <div th:each="photo : ${listPhoto}" class="photo-card">
             <a th:href="@{/photos/show/{id}(id=${photo.id})}">
-            <img th:src="${photo.url}" class="photo-card-img" th:alt="${photo.title}">
-            <div class="photo-card-body">
-                <h5 class="photo-title" th:text="${photo.title}"></h5>
-                <p class="photo-description" th:text="${photo.description}"></p>
-            </div>
+                <img th:src="${photo.url}" class="photo-card-img" th:alt="${photo.title}">
+                <div class="photo-card-body">
+                    <h5 class="photo-title" th:text="${photo.title}"></h5>
+                    <p class="photo-description" th:text="${photo.description}"></p>
+                    <div class="photo-categories">
+                        <strong>Categorie:</strong>
+                        <div th:each="category : ${photo.categories}" th:text="${category.name}"></div>
+                    </div>
+                </div>
             </a>
+            <div class="photo-actions">
+                <!-- Mostra i pulsanti solo se l'utente è un admin -->
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/photos/edit/{id}(id=${photo.id})}" class="btn btn-warning">Edit</a>
+                <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
-
 </div>
 
 <div class="buttons-container">

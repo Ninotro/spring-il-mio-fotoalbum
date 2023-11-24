@@ -15,7 +15,7 @@ public class SecurityConfiguration {
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers("/photos", "/photos/show/**").hasAuthority("ADMIN")                // Index/Show   PHOTO
+                .requestMatchers("/photos", "/photos/show/**").hasAnyAuthority("ADMIN","USER")                // Index/Show   PHOTO
                 .requestMatchers("/users").hasAuthority("ADMIN")                                    // Index        USERS
                 .requestMatchers("/photos/create").hasAuthority("ADMIN")                            // Create       PHOTO
                 .requestMatchers("/photos/edit/**").hasAuthority("ADMIN")                           // Edit         PHOTO
