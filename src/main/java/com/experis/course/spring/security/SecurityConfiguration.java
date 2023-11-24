@@ -15,16 +15,16 @@ public class SecurityConfiguration {
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers("/photos", "/photos/show/**").hasAnyAuthority("ADMIN","USER")                // Index/Show   PHOTO
-                .requestMatchers("/users").hasAuthority("ADMIN")                                    // Index        USERS
-                .requestMatchers("/photos/create").hasAuthority("ADMIN")                            // Create       PHOTO
-                .requestMatchers("/photos/edit/**").hasAuthority("ADMIN")                           // Edit         PHOTO
-                .requestMatchers("/photos/delete/**").hasAuthority("ADMIN")                         // Delete       PHOTO
-                .requestMatchers(HttpMethod.POST, "/photos/**").hasAuthority("ADMIN")               // Metodi POST  PHOTO
+                .requestMatchers("/photos", "/photos/show/**").hasAnyAuthority("ADMIN" , "USER")                    // Index/Show   PHOTO
+                .requestMatchers("/users", "/categories").hasAuthority("ADMIN")                         // Index        USERS-CATEGORIES
+                .requestMatchers("/photos/create").hasAuthority("ADMIN")                                // Create       PHOTO
+                .requestMatchers("/photos/edit/**").hasAuthority("ADMIN")                               // Edit         PHOTO
+                .requestMatchers("/photos/delete/**", "/categories/delete/**").hasAuthority("ADMIN")    // Delete       PHOTO-CATEGORIES
+                .requestMatchers(HttpMethod.POST, "/photos/**", "/categories/**").hasAuthority("ADMIN") // Metodi POST  PHOTO-CATEGORIES
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout();
-        http.csrf().disable();
+        http.csrf().disable();          // CSRF per sicurezza API
         return http.build();
     }
 

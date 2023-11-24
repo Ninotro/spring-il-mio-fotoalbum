@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:insert="fragments/resources :: headResources('Photo List')">
 </head>
 <body>
@@ -16,9 +16,9 @@
         </form>
     </div>
 
-    <div class="buttons-container">
+    <div class="buttons-container"  sec:authorize="hasAuthority('ADMIN')">
         <!-- Mostra il pulsante solo se l'utente è un admin -->
-        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/categories}" class="btn btn-primary">Aggiungi Nuova Categoria</a>
+        <a th:href="@{/categories}" class="btn btn-primary">Aggiungi Nuova Categoria</a>
     </div>
 
     <div class="photo-card-container" th:if="${not listPhoto.empty}">
@@ -34,10 +34,10 @@
                     </div>
                 </div>
             </a>
-            <div class="photo-actions">
+            <div class="photo-actions" sec:authorize="hasAuthority('ADMIN')">
                 <!-- Mostra i pulsanti solo se l'utente è un admin -->
-                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/photos/edit/{id}(id=${photo.id})}" class="btn btn-warning">Edit</a>
-                <form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
+                <a  th:href="@{/photos/edit/{id}(id=${photo.id})}" class="btn btn-warning">Edit</a>
+                <form  th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
