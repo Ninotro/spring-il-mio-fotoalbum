@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Category List')"></head>
+<body>
+
+<div class="container">
+    <div th:if="${message != null}" class="alert success">
+        <span th:text="${message}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+    </div>
+    <div th:if="${messageFailed != null}" class="alert danger">
+        <span th:text="${messageFailed}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+    </div>
+
+    <h1 class="mt-5">Lista Categorie</h1>
+
+    <!-- Form per l'inserimento di una nuova categoria -->
+    <form id="category-form" th:action="@{/categories}" method="POST" th:object="${categoryObj}" class="mt-3">
+        <div class="d-flex align-items-center">
+            <h3 class="text-white mr-2">Inserisci nuova categoria</h3>
+            <div class="form-group mb-0">
+                <div th:insert="fragments/components :: formField('text', '', 'name')"></div>
+            </div>
+            <button class="btn btn-primary ml-2">+</button>
+        </div>
+    </form>
+
+
+
+    <!-- Messaggio se la lista delle categorie è vuota -->
+    <div th:if="${categoryList.empty}" class="alert info mt-3">La lista delle categorie è vuota</div>
+
+    <!-- Tabella delle categorie -->
+    <table class="table mt-3" th:if="${not categoryList.empty}" style="width: 50%;">
+        <thead>
+        <th>Nome categoria</th>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categoryList}">
+            <td class="category-row">
+                <div class="category-name" th:text="${#strings.capitalize(category.name)}"></div>
+                <div class="category-actions">
+                    <form method="POST" th:action="@{/categories/delete/{id}(id=${category.id})}" onsubmit="return confirm('Sei sicuro?')">
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa-solid fa-trash"></i>
+                            Elimina
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:replace="fragments/resources :: jsResources"></script>
+</body>
+</html>
