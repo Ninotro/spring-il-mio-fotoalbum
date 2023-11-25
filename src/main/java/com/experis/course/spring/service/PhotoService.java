@@ -26,6 +26,16 @@ public class PhotoService {
     }
 
 
+    public List <Photo> getPhotoForApi (Optional <String> search) {
+        if (search.isPresent()) {
+            return photoRepository.findByTitleContainingIgnoreCaseAndVisibleTrue(search.get());
+        }
+
+        else
+            return photoRepository.findAllByVisibleTrue();
+    }
+
+
 
 
 

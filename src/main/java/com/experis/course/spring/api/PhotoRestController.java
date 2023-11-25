@@ -1,7 +1,9 @@
 package com.experis.course.spring.api;
 
 import com.experis.course.spring.exception.PhotoNotFoundException;
+import com.experis.course.spring.model.Message;
 import com.experis.course.spring.model.Photo;
+import com.experis.course.spring.service.MessageService;
 import com.experis.course.spring.service.PhotoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/photos")
+@RequestMapping("api/v1")
 @CrossOrigin
 public class PhotoRestController {
 
     @Autowired
     private PhotoService photoService;
+    @Autowired
+    private MessageService messageService;
 
-    @GetMapping
-    public List  <Photo> index() {
 
-        return photoService.GetPhoto(Optional.of(""));
+
+    @GetMapping ("/photos")
+    public List  <Photo> index(@RequestParam Optional <String> search) {
+
+        return photoService.getPhotoForApi(Optional.of(search.orElse("")));
 
     }
 
-//    endpoint per i dettagli del libro preso per id
 
-    @GetMapping ("/{id}")
+
+    @GetMapping ("/photos/{id}")
     public Photo details (@PathVariable Integer id) {
 
         try {
@@ -41,13 +47,14 @@ public class PhotoRestController {
 
     }
 
-    @PostMapping
-    public Photo create(@Valid @RequestBody Photo photo) {
-
-        return photoService.createPhoto(photo);
-
-
+    @PostMapping("/messages")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Message createContactMessage(@RequestBody Message message) {
+        // Salva il messaggio nel database
+        return messageService.createMessage(message);
     }
+
+
 }
 
 
