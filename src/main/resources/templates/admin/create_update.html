@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo != null and photo.id != null}">
 <head th:insert="fragments/resources :: headResources(${isEdit ? 'Photo Edit' : 'Photo Create'})">
 </head>
-<body>
+<nav th:insert="fragments/navbar :: Navbar"></nav>
+
 <div class="container create">
     <h1 th:text="${isEdit ? 'Modifica Foto' : 'Crea Foto'}"></h1>
     <hr>
@@ -47,5 +48,5 @@
         </div>
     </form>
 </div>
-</body>
+
 </html>

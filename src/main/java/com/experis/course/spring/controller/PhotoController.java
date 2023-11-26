@@ -107,11 +107,7 @@ public class PhotoController {
         }
     }
 
-    // Rotta "/photos/delete/id <---(dinamico)" (POST)
     @PostMapping("/delete/{id}")
-    // Parametri in ingresso:
-    // @PathVariable Integer id -> per gestire quale elemento eliminare
-    // RedirectAttributes redirectAttributes -> attributi che ci sono solo nel redirect
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             // Provo a prendere photo in base a id

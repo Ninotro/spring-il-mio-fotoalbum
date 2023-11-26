@@ -1,223 +1,165 @@
+/* Stili di base */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
-.photo-list-container {
-    max-width: 1200px;
+/* Stili del form di ricerca */
+#search-form {
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
-.photo-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px;
+/* Stili degli input del form di ricerca */
+#searchInput {
+    border: none;
+    border-radius: 20px 0 0 20px;
+    padding: 10px;
+    width: 80%;
 }
 
-.photo-card {
-    border: 1px solid #ddd;
-    margin: 10px;
+/* Stili del pulsante del form di ricerca */
+#search-form button {
+    border: none;
+    border-radius: 0 20px 20px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.custom-btn {
+    padding: 20px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: block;
+    margin: 0 auto 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.custom-btn.primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.custom-btn.warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.custom-btn.danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Stili delle card personalizzate */
+.custom-card {
+   
+    margin: 0 10px 20px; 
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    width: calc(33.33% - 20px);
+    height: 650px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out;
-    width: calc(33.333% - 20px);
-    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.photo-card:hover {
+.custom-card:hover {
+    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.photo-card img {
-    width: 100%;
-    max-width: 100%;
-    height: 120px;
-    object-fit: cover;
-}
-
-.photo-card-body {
-    padding: 15px;
-}
-
-.photo-show-container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
+.custom-card-body {
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    text-align: center; /* Centra il contenuto all'interno del container */
 }
 
-.photo-show-title {
-    color: #333;
-    font-size: 24px; /* Dimensione del carattere del titolo */
-    margin-bottom: 10px; /* Aggiunge uno spazio inferiore al titolo */
+.custom-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
 }
 
-.photo-show-description {
-    color: #666;
-    margin-bottom: 20px; /* Aggiunge uno spazio inferiore alla descrizione */
+.custom-card-text {
+    font-size: 1rem;
 }
 
-.photo-show-img {
-    max-width: 100%;
-    height: auto;
-    max-height: 400px; /* Imposta l'altezza massima dell'immagine */
-    display: block;
-    margin: 10px auto; /* Centra l'immagine con uno spazio uniforme attorno ad essa */
+.custom-photo-wrapper {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
 }
 
-.buttons-container {
-    margin-top: 20px;
+.custom-card-footer {
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ccc;
+    text-align: center;
 }
 
-
-
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-
-.alert.success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.alert.danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-
-.alert.info {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
-
-h1 {
-    margin-top: 40px;
-}
-
-.category-row {
+.photo-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin-top: 10px;
 }
 
-.category-name {
-    flex: 1;
+.photo-actions a,
+.photo-actions button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 5px;
 }
 
-.category-actions {
-    margin-left: 10px;
+.photo-actions a {
+    background-color: #007bff;
+    color: #fff;
 }
 
-.form-group {
+.photo-actions button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.card-container {
     display: flex;
-    align-items: flex-start;
-}
-
-.form-group input {
-    flex: 1;
-    margin-right: 10px;
-
-.btn-primary {
-    margin-top: 20px;
-}
-
-.table {
-    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -10px;
 }
 
 
-  .photo-list-container {
-            width: 80%;
-            margin: auto;
-            text-align: center;
+.navbar.navbar-light {
+    background-color: #007bff !important;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.navbar.navbar-light .navbar-brand,
+.navbar.navbar-light .nav-link {
+    color: #fff !important;
+}
+
+.navbar.navbar-light .navbar-toggler-icon {
+    background-color: #fff;
+}
+
+.navbar.navbar-light .btn-outline-danger {
+    color: #dc3545;
+}
+
+
+   .form-check-label {
+            margin-left: 10px;
+            display: block;
         }
 
-        .photo-card {
-            border: 1px solid #ddd;
-            margin: 10px;
-            padding: 10px;
-            position: relative;
-            background-color: #f9f9f9;
+        .form-check-input {
+            margin-top: 5px;
         }
-
-        .photo-card img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .photo-card-body {
-            margin-top: 10px;
-        }
-
-        .photo-title,
-        .photo-description {
-            color: #333;
-            text-decoration: none;
-            margin: 0;
-        }
-
-        .photo-categories {
-            margin-top: 10px;
-            color: #777;
-        }
-
-        .photo-actions {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            text-align: center;
-        }
-
-        .photo-actions a,
-        .photo-actions button {
-            margin: 5px;
-            padding: 8px 15px;
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-        }
-
-        .btn-warning {
-            background-color: #f0ad4e;
-        }
-
-        .btn-danger {
-            background-color: #d9534f;
-        }
-
-
-           .search-container {
-                    text-align: right;
-                    margin-top: 10px;
-                }
-
-                .search-container input {
-                    padding: 8px;
-                    border-radius: 4px;
-                    border: 1px solid #ddd;
-                }
-
-                .search-container button {
-                    padding: 8px 15px;
-                    margin-left: 5px;
-                    border: none;
-                    border-radius: 4px;
-                    background-color: #5bc0de;
-                    color: #fff;
-                    cursor: pointer;
-                }
-

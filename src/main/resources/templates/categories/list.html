@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Category List')"></head>
-<body>
+
+<nav th:insert="fragments/navbar :: Navbar"></nav>
 
 <div class="container">
     <div th:if="${message != null}" class="alert success">

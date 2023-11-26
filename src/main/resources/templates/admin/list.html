@@ -1,44 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:insert="fragments/resources :: headResources('Photo List')">
+
+<head th:insert="fragments/resources :: headResources('Spring Photo Album')">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Photo Album</title>
+    
+
 </head>
-<body>
+<nav th:insert="fragments/navbar :: Navbar"></nav>
+
 
 <div class="photo-list-container">
-    <h1>Photo List</h1>
+    <h1>SPRING-PHOTO-ALBUM</h1>
 
-    <!-- Aggiungi il campo di ricerca -->
-    <div class="search-container">
-        <!-- Aggiungi un modulo di ricerca -->
-        <form th:action="@{/photos}" method="get">
-            <input type="text" id="searchInput" name="search" placeholder="Cerca per titolo, descrizione o categoria">
-            <button type="submit">Cerca</button>
-        </form>
+    <form id="search-form" class="mb-4">
+        <div class="input-group">
+            <input type="text" id="searchInput" name="search" placeholder="Search for photos"
+                   class="form-control">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <div class="buttons-container" sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/photos/create}" class="custom-btn primary">Aggiungi Nuova foto</a>
     </div>
 
-    <div class="buttons-container"  sec:authorize="hasAuthority('ADMIN')">
-        <!-- Mostra il pulsante solo se l'utente è un admin -->
-        <a th:href="@{/categories}" class="btn btn-primary">Aggiungi Nuova Categoria</a>
+    <div class="buttons-container" sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/categories}" class="custom-btn primary">Aggiungi Nuova Categoria</a>
     </div>
 
     <div class="photo-card-container" th:if="${not listPhoto.empty}">
-        <div th:each="photo : ${listPhoto}" class="photo-card">
-            <a th:href="@{/photos/show/{id}(id=${photo.id})}">
-                <img th:src="${photo.url}" class="photo-card-img" th:alt="${photo.title}">
-                <div class="photo-card-body">
-                    <h5 class="photo-title" th:text="${photo.title}"></h5>
-                    <p class="photo-description" th:text="${photo.description}"></p>
-                    <div class="photo-categories">
-                        <strong>Categorie:</strong>
-                        <div th:each="category : ${photo.categories}" th:text="${category.name}"></div>
-                    </div>
-                </div>
-            </a>
+        <div class="card-container">
+            <div th:each="photo : ${listPhoto}" class="custom-card">
+            <div class="custom-card-body">
+                <h5 class="custom-card-title" th:text="${photo.title}"></h5>
+                <p class="custom-card-text" th:text="${photo.description}"></p>
+            </div>
+            <div class="custom-photo-wrapper" th:style="'background-image: url(' + ${photo.url} + ');'">
+            </div>
+            <div class="custom-card-footer">
+                <strong>Categorie:</strong>
+                <div th:each="category : ${photo.categories}" th:text="${category.name}"></div>
+            </div>
             <div class="photo-actions" sec:authorize="hasAuthority('ADMIN')">
-                <!-- Mostra i pulsanti solo se l'utente è un admin -->
-                <a  th:href="@{/photos/edit/{id}(id=${photo.id})}" class="btn btn-warning">Edit</a>
-                <form  th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <a th:href="@{/photos/edit/{id}(id=${photo.id})}" class="custom-btn warning">Edit</a>
+                <form th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post"
+                      onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
+                    <button type="submit" class="custom-btn danger">Delete</button>
                 </form>
             </div>
         </div>
@@ -49,5 +58,5 @@
     <script th:replace="fragments/resources :: jsResources"></script>
 </div>
 
-</body>
+
 </html>

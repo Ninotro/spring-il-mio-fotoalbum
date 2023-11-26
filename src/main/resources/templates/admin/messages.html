@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:insert="fragments/resources :: headResources('Message List')">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message List</title>
+</head>
+
+<nav th:insert="fragments/navbar :: Navbar"></nav>
+
+<div class="message-list-container">
+    <h1>LISTA MESSAGGI</h1>
+
+
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Email Mittente</th>
+            <th>Corpo Messaggio</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message : ${listMessage}">
+            <td th:text="${message.senderEmail}"></td>
+            <td th:text="${message.body}"></td><!-- Add more table data cells if needed -->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="buttons-container">
+    <script th:replace="fragments/resources :: jsResources"></script>
+</div>
+
+</html>

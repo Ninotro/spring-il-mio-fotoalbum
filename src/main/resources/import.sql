@@ -33,3 +33,6 @@ INSERT INTO photos_categories (photo_id, categories_id) VALUES(2, 2);
 INSERT INTO photos_categories (photo_id, categories_id) VALUES(2, 1);
 INSERT INTO photos_categories (photo_id, categories_id) VALUES(1, 2);
 INSERT INTO photos_categories (photo_id, categories_id) VALUES(4, 3);
+
+
+INSERT INTO messages (body, sender_email) VALUES ('Ciao, che bella foto!' , 'ninotroia96@gmail.com')
