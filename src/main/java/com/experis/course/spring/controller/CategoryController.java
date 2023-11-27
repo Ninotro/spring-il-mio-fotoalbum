@@ -3,10 +3,13 @@ package com.experis.course.spring.controller;
 import com.experis.course.spring.exception.CategoryNameUniqueException;
 import com.experis.course.spring.exception.CategoryNotFoundException;
 import com.experis.course.spring.model.Category;
+import com.experis.course.spring.repository.UserRepository;
+import com.experis.course.spring.security.DatabaseUserDetails;
 import com.experis.course.spring.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,13 +23,24 @@ public class CategoryController {
 @Autowired
 CategoryService categoryService;
 
+    @Autowired
+    private UserRepository userRepository;
 
 
-    @GetMapping
-    public String index(Model model) {
-       model.addAttribute("categoryList", categoryService.getAll());
-       model.addAttribute("categoryObj", new Category());
-        return "categories/list";
+@GetMapping
+    public String index(Model model, Authentication authentication) {
+        DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
+
+        // Verifica se l'utente è SUPERADMIN
+        if (userDetails.isSuperAdmin()) {
+            model.addAttribute("categoryList", categoryService.getAll());
+            model.addAttribute("categoryObj", new Category());
+            return "categories/list";
+        } else {
+            // Messaggio di accesso negato
+            model.addAttribute("message", "Accesso negato. Solo i SUPERADMIN possono creare categorie.");
+            return "error/error";
+        }
     }
 
 

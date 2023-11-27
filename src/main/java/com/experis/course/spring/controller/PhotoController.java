@@ -2,11 +2,14 @@ package com.experis.course.spring.controller;
 
 import com.experis.course.spring.exception.PhotoNotFoundException;
 import com.experis.course.spring.model.Photo;
+import com.experis.course.spring.repository.UserRepository;
+import com.experis.course.spring.security.DatabaseUserDetails;
 import com.experis.course.spring.service.CategoryService;
 import com.experis.course.spring.service.PhotoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +27,23 @@ public class PhotoController {
     @Autowired
     private CategoryService categoryService;
 
-    private
+    @Autowired
+    private UserRepository userRepository;
 
-    @GetMapping
-    String listIndex(@RequestParam Optional<String> search, Model model) {
-        model.addAttribute("listPhoto", photoService.GetPhoto(search));
+
+
+@GetMapping
+    String listIndex(@RequestParam Optional<String> search, Authentication authentication, Model model) {
+        DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
+        Integer userId = userDetails.getId();
+
+        // Verifica se l'utente è SUPERADMIN
+        if (userDetails.isSuperAdmin()) {
+            model.addAttribute("listPhoto", photoService.GetPhoto(search, userId, true));
+        } else {
+            model.addAttribute("listPhoto", photoService.GetPhoto(search, userId, false));
+        }
+
         return "admin/list";
     }
 
@@ -49,13 +64,21 @@ public class PhotoController {
     }
 
     @GetMapping("/create")
-    public String createGet(Model model) {
+    public String createGet(Model model, Authentication authentication) {
+        DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
 
-        model.addAttribute("photo", new Photo());
-        model.addAttribute("categoryList", categoryService.getAll());
-
-        return "admin/create_update";
+        // Verifica se l'utente è ADMIN
+        if (userDetails.isAdmin()) {
+            model.addAttribute("photo", new Photo());
+            model.addAttribute("categoryList", categoryService.getAll());
+            return "admin/create_update";
+        } else {
+            // Messaggio di accesso negato
+            model.addAttribute("message", "Accesso negato. Solo gli ADMIN possono creare foto.");
+            return "error";
+        }
     }
+
 
 
     @PostMapping("/create")
@@ -87,20 +110,17 @@ public class PhotoController {
 
 
     @PostMapping("/edit/{id}")
-        public String editPost(
+    public String editPost(
             @PathVariable Integer id,
-            @Valid
-            @ModelAttribute("photo")
-            Photo formPhoto,
+            @Valid @ModelAttribute("photo") Photo formPhoto,
             BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
-
             model.addAttribute("categoryList", categoryService.getAll());
             return "/admin/create_update";
         }
         try {
-            Photo savedPhoto = photoService.editPhoto(formPhoto);
+            Photo savedPhoto = photoService.editPhoto(id, formPhoto);
             return "redirect:/photos/show/" + savedPhoto.getId();
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

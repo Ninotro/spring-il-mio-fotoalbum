@@ -15,12 +15,11 @@ public class SecurityConfiguration {
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers("/photos", "/photos/show/**").hasAnyAuthority("ADMIN" , "USER")                    // Index/Show   PHOTO
-                .requestMatchers("/users", "/categories").hasAuthority("ADMIN")                         // Index        USERS-CATEGORIES
+                .requestMatchers("/photos", "/photos/show/**").hasAnyAuthority("ADMIN" , "SUPERADMIN")                    // Index/Show   PHOTO
+                .requestMatchers("/users", "/categories").hasAuthority("SUPERADMIN")                         // Index        USERS-CATEGORIES
                 .requestMatchers("/photos/create").hasAuthority("ADMIN")                                // Create       PHOTO
-                .requestMatchers("/photos/edit/**").hasAuthority("ADMIN")                               // Edit         PHOTO
-                .requestMatchers("/photos/delete/**", "/categories/delete/**").hasAuthority("ADMIN")    // Delete       PHOTO-CATEGORIES
-                .requestMatchers(HttpMethod.POST, "/photos/**", "/categories/**").hasAuthority("ADMIN") // Metodi POST  PHOTO-CATEGORIES
+                .requestMatchers("/photos/edit/**").hasAnyAuthority("ADMIN","SUPERADMIN")                               // Edit         PHOTO
+                .requestMatchers(HttpMethod.POST, "/photos/**").hasAnyAuthority("SUPERADMIN","ADMIN") // Metodi POST  PHOTO-CATEGORIES
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout();

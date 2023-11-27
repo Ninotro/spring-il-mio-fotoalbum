@@ -23,10 +23,11 @@
     </form>
 
     <div class="buttons-container" sec:authorize="hasAuthority('ADMIN')">
+
+
         <a th:href="@{/photos/create}" class="custom-btn primary">Aggiungi Nuova foto</a>
     </div>
-
-    <div class="buttons-container" sec:authorize="hasAuthority('ADMIN')">
+    <div class="buttons-container" sec:authorize="hasAuthority('SUPERADMIN')">
         <a th:href="@{/categories}" class="custom-btn primary">Aggiungi Nuova Categoria</a>
     </div>
 
@@ -43,7 +44,6 @@
                 <strong>Categorie:</strong>
                 <div th:each="category : ${photo.categories}" th:text="${category.name}"></div>
             </div>
-            <div class="photo-actions" sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/photos/edit/{id}(id=${photo.id})}" class="custom-btn warning">Edit</a>
                 <form th:action="@{/photos/delete/{id}(id=${photo.id})}" method="post"
                       onsubmit="return confirm('Sei sicuro di voler eliminare questa foto?');">
@@ -58,5 +58,5 @@
     <script th:replace="fragments/resources :: jsResources"></script>
 </div>
 
-
+</div>
 </html>

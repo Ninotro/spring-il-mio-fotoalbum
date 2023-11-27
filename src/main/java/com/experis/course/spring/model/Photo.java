@@ -28,12 +28,25 @@ public class Photo {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Category> categories;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
@@ -75,4 +88,6 @@ public class Photo {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+
 }

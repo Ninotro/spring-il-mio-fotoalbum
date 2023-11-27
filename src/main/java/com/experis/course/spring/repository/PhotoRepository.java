@@ -13,4 +13,9 @@ public interface PhotoRepository extends JpaRepository <Photo, Integer> {
     List<Photo> findByTitleContainingIgnoreCaseAndVisibleTrue(String nameKeyword);;
 
     List<Photo> findAllByVisibleTrue();
+
+    List<Photo> findByTitleContainingIgnoreCaseAndUserId(String nameKeyword, Integer userId);
+
+    List<Photo> findAllByUserId(Integer id);
+
 }

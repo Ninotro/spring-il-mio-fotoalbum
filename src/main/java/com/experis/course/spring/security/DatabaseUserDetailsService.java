@@ -30,4 +30,6 @@ public class DatabaseUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Username " + username + " not found.");
         }
     }
+
+
 }
